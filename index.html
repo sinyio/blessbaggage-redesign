@@ -97,8 +97,14 @@ h1,h2,h3{font-weight:600;letter-spacing:-.04em;line-height:1;text-wrap:balance}
 
 /* SWATCHES / SIZES */
 .sw{display:flex;gap:8px;flex-wrap:wrap}
-.sw button{width:30px;height:30px;border-radius:50%;background:var(--sw);box-shadow:inset 0 0 0 1px rgba(19,19,19,.16)}
-.sw button[aria-pressed=true]{box-shadow:inset 0 0 0 1px rgba(19,19,19,.16),0 0 0 5px rgba(19,19,19,.2)}
+.sw button{position:relative;width:32px;height:32px;border-radius:50%}
+.sw button::before{content:'';position:absolute;inset:1px;border-radius:50%;background:var(--sw);box-shadow:inset 0 0 0 1px rgba(19,19,19,.14);transition:transform .2s var(--ease)}
+.sw button::after{content:'';position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--sw) 60%,var(--ink));opacity:0}
+.sw button:hover:not([aria-pressed=true])::before{transform:scale(.92)}
+.sw button[aria-pressed=true]::before{transform:scale(.66);animation:swDot .3s var(--ease)}
+.sw button[aria-pressed=true]::after{opacity:1;animation:swRing .3s ease}
+@keyframes swDot{from{transform:scale(1)}}
+@keyframes swRing{from{opacity:0}}
 .szs{display:flex;gap:6px}
 .szs button{min-width:46px;height:38px;padding:0 12px;border-radius:999px;border:1px solid var(--line);font-size:14px;font-weight:600;transition:all .2s}
 .szs button:hover:not(:disabled){border-color:var(--ink)}
