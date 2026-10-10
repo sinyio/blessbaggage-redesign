@@ -265,9 +265,23 @@ h1,h2,h3{font-weight:600;letter-spacing:-.04em;line-height:1;text-wrap:balance}
 .cookie p a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 .cookie .btn{height:42px;padding:0 20px;font-size:14px}
 
-/* REVEAL */
-.fi{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-.fi.vis{opacity:1;transform:none}
+/* LOADER */
+body.loading{overflow:hidden}
+.loader{position:fixed;inset:0;z-index:3000;background:var(--ink);color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(20px,4vw,40px);transition:transform .9s cubic-bezier(.76,0,.24,1);will-change:transform}
+.loader.done{transform:translateY(-100%)}
+.loader-top{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:rgba(255,255,255,.5)}
+.loader-mid{display:flex;justify-content:center;align-items:flex-end;height:clamp(120px,22vh,200px)}
+.loader-mid .case{--c:#b9c1c9;height:100%;width:auto;animation:ldCase 1.6s var(--ease) infinite alternate,ldColor 4.8s steps(1) infinite}
+.loader-bot{display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+.loader-n{font-size:clamp(72px,16vw,200px);font-weight:600;letter-spacing:-.06em;line-height:.8;font-variant-numeric:tabular-nums}
+.loader-n small{font-size:.3em;letter-spacing:0;color:var(--acc);margin-left:.1em}
+.loader-bar{flex:1;max-width:320px;height:2px;background:rgba(255,255,255,.15);margin-bottom:10px;overflow:hidden}
+.loader-bar i{display:block;height:100%;background:var(--acc);transform-origin:left;transform:scaleX(0)}
+@keyframes ldCase{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+@keyframes ldColor{0%{--c:#b9c1c9}25%{--c:#e59aa6}50%{--c:#f0c53c}75%{--c:#f4f1ea}}
+.rise{transition:opacity .9s var(--ease) var(--d,0s),transform .9s var(--ease) var(--d,0s)}
+.hero-v.rise{transition:opacity .9s var(--ease) var(--d,0s),transform .9s var(--ease) var(--d,0s),background .5s}
+body.loading .rise{opacity:0;transform:translateY(32px)}
 
 /* RESPONSIVE */
 @media(max-width:1000px){
@@ -299,11 +313,18 @@ h1,h2,h3{font-weight:600;letter-spacing:-.04em;line-height:1;text-wrap:balance}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .fi{opacity:1;transform:none}
 }
 </style>
 </head>
-<body>
+<body class="loading">
+
+<!-- LOADER -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-top"><span class="logo" style="color:#fff">BLESS<span>BAGGAGE</span></span><span>Москва</span></div>
+  <div class="loader-mid" id="loaderCase"></div>
+  <div class="loader-bot"><div class="loader-n"><span id="loaderN">0</span><small>%</small></div><div class="loader-bar"><i id="loaderBar"></i></div></div>
+</div>
+<noscript><style>.loader{display:none}body.loading{overflow:auto}body.loading .rise{opacity:1;transform:none}</style></noscript>
 
 <!-- SHARED SVG DEFS -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -356,7 +377,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.04em;line-height:1;text-wrap:balance}
 <!-- HERO -->
 <header class="hero wrap">
   <div class="hero-g">
-    <div class="hero-l">
+    <div class="hero-l rise">
       <div>
         <div class="eyebrow">Премиальные чемоданы · Москва</div>
         <h1 class="hero-h">Чемодан, который <em>задает</em> стандарт</h1>
@@ -372,7 +393,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.04em;line-height:1;text-wrap:balance}
         <div class="stat"><div class="stat-n">7</div><div class="stat-l">дней на возврат</div></div>
       </div>
     </div>
-    <div class="hero-v" id="heroV">
+    <div class="hero-v rise" id="heroV" style="--d:.12s">
       <div class="chip"><svg><use href="#i-bolt"/></svg>USB-зарядка</div>
       <div class="chip"><svg><use href="#i-laptop"/></svg>Отсек для ноутбука</div>
       <div class="chip"><svg><use href="#i-cup"/></svg>Подстаканник</div>
@@ -401,7 +422,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.04em;line-height:1;text-wrap:balance}
 
 <!-- PROMO -->
 <div class="wrap">
-  <div class="promo fi">
+  <div class="promo">
     <div>
       <h2>Персонализация в подарок</h2>
       <p>При покупке любого чемодана — гравировка или монограмма бесплатно</p>
@@ -417,15 +438,15 @@ h1,h2,h3{font-weight:600;letter-spacing:-.04em;line-height:1;text-wrap:balance}
     <div><div class="eyebrow">О нас</div><h2 class="h2">Все уже внутри</h2></div>
   </div>
   <div class="bento">
-    <div class="b b-q fi">
+    <div class="b b-q">
       <blockquote>«Мы те самые ребята, которые устали от ужасных, старомодных чемоданов — и решили сделать свои»</blockquote>
       <cite>Команда BLESSBAGGAGE</cite>
     </div>
-    <div class="b b-f fi"><div class="ico"><svg><use href="#i-laptop"/></svg></div><div><h4>Отделение для ноутбука</h4><p>Встроенный органайзер для техники — планшет, ноутбук и кабели всегда под рукой</p></div></div>
-    <div class="b b-f fi"><div class="ico"><svg><use href="#i-bolt"/></svg></div><div><h4>Встроенная зарядка</h4><p>USB-порт позволяет заряжать телефон прямо из чемодана — без розеток в очереди</p></div></div>
-    <div class="b b-f fi"><div class="ico"><svg><use href="#i-cup"/></svg></div><div><h4>Подстаканник</h4><p>Потому что кофе в аэропорту — это святое. Встроен в конструкцию ручки</p></div></div>
-    <div class="b b-f fi"><div class="ico"><svg><use href="#i-lock"/></svg></div><div><h4>Замки-защелки</h4><p>Быстрое открытие и надежная защита от несанкционированного доступа</p></div></div>
-    <div class="b b-m fi">
+    <div class="b b-f"><div class="ico"><svg><use href="#i-laptop"/></svg></div><div><h4>Отделение для ноутбука</h4><p>Встроенный органайзер для техники — планшет, ноутбук и кабели всегда под рукой</p></div></div>
+    <div class="b b-f"><div class="ico"><svg><use href="#i-bolt"/></svg></div><div><h4>Встроенная зарядка</h4><p>USB-порт позволяет заряжать телефон прямо из чемодана — без розеток в очереди</p></div></div>
+    <div class="b b-f"><div class="ico"><svg><use href="#i-cup"/></svg></div><div><h4>Подстаканник</h4><p>Потому что кофе в аэропорту — это святое. Встроен в конструкцию ручки</p></div></div>
+    <div class="b b-f"><div class="ico"><svg><use href="#i-lock"/></svg></div><div><h4>Замки-защелки</h4><p>Быстрое открытие и надежная защита от несанкционированного доступа</p></div></div>
+    <div class="b b-m">
       <div class="mat"><i>01</i><h4>Поликарбонат</h4><p>Трехслойный композитный — легкий, прочный, устойчивый к ударам и царапинам</p></div>
       <div class="mat"><i>02</i><h4>Алюминий</h4><p>Элементы конструкции из алюминия — жесткость каркаса и стильный внешний вид</p></div>
       <div class="mat"><i>03</i><h4>Кожа</h4><p>Натуральная кожа в отделке — детали, которые выдают класс вещи с первого взгляда</p></div>
@@ -439,12 +460,12 @@ h1,h2,h3{font-weight:600;letter-spacing:-.04em;line-height:1;text-wrap:balance}
     <div><div class="eyebrow">Клиентам</div><h2 class="h2">Доставка и оплата</h2></div>
   </div>
   <div class="dgrid">
-    <div class="dcard fi"><div class="ico"><svg><use href="#i-pin"/></svg></div><h3>Москва</h3><p>Курьером в день заказа. Доставим в удобное время — согласуем в WhatsApp</p><div class="dprice">700 ₽</div></div>
-    <div class="dcard fi"><div class="ico"><svg><use href="#i-truck"/></svg></div><h3>Россия</h3><p>Доставка СДЭК по всей стране. Отправка в течение 36 часов после оплаты</p><div class="dprice">По тарифам СДЭК</div></div>
-    <div class="dcard fi"><div class="ico"><svg><use href="#i-globe"/></svg></div><h3>ЕАЭС и другие страны</h3><p>Армения, Беларусь, Казахстан, Кыргызстан — через СДЭК. Другие страны — индивидуально</p><div class="dprice">По тарифам СДЭК</div></div>
+    <div class="dcard"><div class="ico"><svg><use href="#i-pin"/></svg></div><h3>Москва</h3><p>Курьером в день заказа. Доставим в удобное время — согласуем в WhatsApp</p><div class="dprice">700 ₽</div></div>
+    <div class="dcard"><div class="ico"><svg><use href="#i-truck"/></svg></div><h3>Россия</h3><p>Доставка СДЭК по всей стране. Отправка в течение 36 часов после оплаты</p><div class="dprice">По тарифам СДЭК</div></div>
+    <div class="dcard"><div class="ico"><svg><use href="#i-globe"/></svg></div><h3>ЕАЭС и другие страны</h3><p>Армения, Беларусь, Казахстан, Кыргызстан — через СДЭК. Другие страны — индивидуально</p><div class="dprice">По тарифам СДЭК</div></div>
   </div>
   <div class="dgrid2">
-    <div class="box fi">
+    <div class="box">
       <h4>Способы оплаты</h4>
       <div class="pms">
         <span class="pm">Банковская карта</span>
@@ -454,7 +475,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.04em;line-height:1;text-wrap:balance}
         <span class="pm">Альфа Pay</span>
       </div>
     </div>
-    <div class="box fi">
+    <div class="box">
       <h4>Возврат</h4>
       <p>До получения — откажитесь в сроки доставки через WhatsApp. После получения — 7 дней на возврат. Товар должен сохранить товарный вид, ярлыки и документы. Возврат через СДЭК — расходы на пересылку несет покупатель.</p>
       <p>Не принимаем к возврату товары б/у и изготовленные по индивидуальному заказу.</p>
@@ -687,7 +708,7 @@ function syncCard(g){
   el.querySelector('.badges').innerHTML=(p.pre?'<span class="badge">Предзаказ</span>':'')+(p.op?`<span class="badge sale">−${Math.round((1-p.p/p.op)*100)}%</span>`:'');
   el.querySelector('.pbody').innerHTML=cardBody(g);
 }
-$('pgrid').innerHTML=GROUPS.map(g=>`<article class="pcard fi" data-g="${g.key}">
+$('pgrid').innerHTML=GROUPS.map(g=>`<article class="pcard" data-g="${g.key}">
   <div class="pvis"><div class="badges"></div><span class="pkind">${g.kind}</span><div class="cases">${(g.set||[0]).map(z=>caseSvg().replace('class="case"',`class="case" style="--s:${SCALE[z]||1}"`)).join('')}</div></div>
   <div class="pbody"></div></article>`).join('');
 $('pgrid').addEventListener('click',e=>{
@@ -726,14 +747,33 @@ try{ckSeen=!!localStorage.getItem('bb_ck')}catch(e){}
 $('cookieOk').addEventListener('click',()=>{$('cookie').classList.remove('show');try{localStorage.setItem('bb_ck','1')}catch(e){}});
 if(!ckSeen)setTimeout(()=>$('cookie').classList.add('show'),1800);
 
-// REVEAL
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');observer.unobserve(e.target)}});
-},{threshold:.08});
-document.querySelectorAll('.fi').forEach(el=>observer.observe(el));
-
 // INIT
 renderCart();
+
+// LOADER
+(function(){
+  const el=$('loader'),n=$('loaderN'),bar=$('loaderBar');
+  $('loaderCase').innerHTML=caseSvg();
+  let p=0,ready=false,gone=false;
+  const fonts=document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve();
+  const loaded=new Promise(r=>document.readyState==='complete'?r():addEventListener('load',r,{once:true}));
+  const minTime=new Promise(r=>setTimeout(r,1200));
+  Promise.race([Promise.all([fonts,loaded,minTime]),new Promise(r=>setTimeout(r,5000))]).then(()=>ready=true);
+  function finish(){
+    if(gone)return;gone=true;
+    el.classList.add('done');
+    document.body.classList.remove('loading');
+    setTimeout(()=>el.remove(),1000);
+  }
+  function tick(){
+    p+=ready?Math.max(1.5,(100-p)*.12):(88-p)*.03;
+    if(p>=99.5)p=100;
+    n.textContent=Math.round(p);
+    bar.style.transform='scaleX('+p/100+')';
+    if(p<100)requestAnimationFrame(tick);else setTimeout(finish,250);
+  }
+  requestAnimationFrame(tick);
+})();
 </script>
 </body>
 </html>
