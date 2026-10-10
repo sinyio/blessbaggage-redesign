@@ -97,8 +97,8 @@ h1,h2,h3{font-weight:600;letter-spacing:-.04em;line-height:1;text-wrap:balance}
 
 /* SWATCHES / SIZES */
 .sw{display:flex;gap:8px;flex-wrap:wrap}
-.sw button{position:relative;width:30px;height:30px;border-radius:50%;background:var(--sw);box-shadow:inset 0 0 0 1px rgba(19,19,19,.16)}
-.sw button[aria-pressed=true]::after{content:'';position:absolute;left:11px;top:7px;width:6px;height:11px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);mix-blend-mode:difference}
+.sw button{width:30px;height:30px;border-radius:50%;background:var(--sw);box-shadow:inset 0 0 0 1px rgba(19,19,19,.16)}
+.sw button[aria-pressed=true]{box-shadow:inset 0 0 0 1px rgba(19,19,19,.16),0 0 0 5px rgba(19,19,19,.2)}
 .szs{display:flex;gap:6px}
 .szs button{min-width:46px;height:38px;padding:0 12px;border-radius:999px;border:1px solid var(--line);font-size:14px;font-weight:600;transition:all .2s}
 .szs button:hover:not(:disabled){border-color:var(--ink)}
