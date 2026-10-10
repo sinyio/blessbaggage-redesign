@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLESSBAGGAGE — Премиальные чемоданы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f3f1ec;--panel:#e8e5de;--card:#fff;
+  --ink:#131313;--mute:#6d6a64;--line:rgba(19,19,19,.1);
+  --acc:#ff5a1f;--acc2:#ff7a47;
+  --r:28px;--r-sm:16px;--gut:clamp(16px,4vw,40px);
+  --ease:cubic-bezier(.2,.7,.2,1)
+}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{font-family:'Onest','Helvetica Neue',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1320px;margin:0 auto;padding:0 var(--gut)}
+h1,h2,h3{font-weight:600;letter-spacing:-.04em;line-height:1;text-wrap:balance}
+.h2{font-size:clamp(34px,5.2vw,68px)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--mute);margin-bottom:18px}
+.eyebrow::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--acc)}
+.sec{padding-block:clamp(64px,9vw,128px)}
+.sec-hdr{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:clamp(28px,4vw,52px);flex-wrap:wrap}
+.lnk{font-size:15px;font-weight:500;border-bottom:1px solid var(--ink);padding-bottom:2px;transition:color .2s,border-color .2s}
+.lnk:hover{color:var(--acc);border-color:var(--acc)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:54px;padding:0 28px;border-radius:999px;font-size:15px;font-weight:600;white-space:nowrap;transition:transform .25s var(--ease),background .2s,color .2s,border-color .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-ink{background:var(--ink);color:#fff}
+.btn-ink:hover{background:var(--acc)}
+.btn-line{border:1px solid var(--line);background:rgba(255,255,255,.5)}
+.btn-line:hover{border-color:var(--ink)}
+.btn-white{background:#fff;color:var(--ink)}
+.btn-white:hover{background:var(--ink);color:#fff}
+.btn svg{width:18px;height:18px}
+
+/* NAV */
+.nav{position:fixed;top:12px;left:0;right:0;z-index:900;padding:0 var(--gut);pointer-events:none}
+.nav-in{pointer-events:auto;max-width:1240px;margin:0 auto;height:60px;display:flex;align-items:center;padding:0 8px 0 24px;border-radius:999px;background:rgba(243,241,236,.72);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid var(--line);transition:box-shadow .3s}
+.nav.on .nav-in{box-shadow:0 10px 40px rgba(19,19,19,.08)}
+.logo{font-size:15px;font-weight:700;letter-spacing:.14em}
+.logo span{color:var(--acc)}
+.nav-links{display:flex;gap:4px;list-style:none;margin:0 auto}
+.nav-links a{display:block;padding:8px 16px;border-radius:999px;font-size:14px;font-weight:500;color:var(--mute);transition:background .2s,color .2s}
+.nav-links a:hover{background:rgba(19,19,19,.06);color:var(--ink)}
+.nav-r{display:flex;align-items:center;gap:6px}
+.cart-btn{display:flex;align-items:center;gap:10px;height:44px;padding:0 8px 0 18px;border-radius:999px;background:var(--ink);color:#fff;font-size:14px;font-weight:600;transition:background .2s}
+.cart-btn:hover{background:var(--acc)}
+.cart-c{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;padding:0 6px;background:#fff;color:var(--ink);font-size:12px;font-weight:700;border-radius:999px}
+.burger{display:none;width:44px;height:44px;border-radius:50%;align-items:center;justify-content:center;flex-direction:column;gap:5px}
+.burger span{display:block;width:18px;height:1.5px;background:var(--ink)}
+
+/* MOBILE MENU */
+.mob{position:fixed;inset:0;background:var(--bg);z-index:950;display:flex;flex-direction:column;justify-content:flex-end;padding:96px var(--gut) 40px;gap:6px;opacity:0;visibility:hidden;transform:translateY(-12px);transition:opacity .3s,transform .3s var(--ease),visibility .3s}
+.mob.open{opacity:1;visibility:visible;transform:none}
+.mob a{font-size:44px;font-weight:600;letter-spacing:-.04em;line-height:1.15}
+.mob a:active{color:var(--acc)}
+.mob-x{position:absolute;top:20px;right:var(--gut);width:44px;height:44px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
+.mob-x svg,.cart-x svg{width:16px;height:16px}
+
+/* HERO */
+.hero{padding-top:112px}
+.hero-g{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,56px);align-items:stretch}
+.hero-l{display:flex;flex-direction:column;justify-content:space-between;gap:48px;padding:clamp(8px,3vw,40px) 0 8px}
+.hero-h{font-size:clamp(46px,7.6vw,116px);line-height:.93;letter-spacing:-.055em}
+.hero-h em{font-style:normal;color:var(--acc)}
+.hero-sub{font-size:clamp(16px,1.4vw,19px);color:var(--mute);max-width:440px;margin:28px 0 32px}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+.stat{padding:20px 0 0}
+.stat+.stat{padding-left:20px;border-left:1px solid var(--line)}
+.stat-n{font-size:clamp(28px,3.4vw,44px);font-weight:600;letter-spacing:-.04em;line-height:1}
+.stat-l{font-size:13px;color:var(--mute);margin-top:6px}
+.hero-v{--c:#b9c1c9;position:relative;min-height:clamp(420px,52vw,660px);border-radius:36px;background:color-mix(in srgb,var(--c) 30%,var(--panel));transition:background .5s;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding:56px 24px 96px}
+.hero-v .case{height:100%;max-height:520px;width:auto}
+.chip{position:absolute;display:flex;align-items:center;gap:8px;padding:10px 16px 10px 12px;border-radius:999px;background:rgba(255,255,255,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:13px;font-weight:500;box-shadow:0 6px 24px rgba(19,19,19,.08);animation:float 6s ease-in-out infinite}
+.chip svg{width:18px;height:18px;color:var(--acc)}
+.chip:nth-of-type(1){top:16%;left:6%}
+.chip:nth-of-type(2){top:38%;right:5%;animation-delay:-2s}
+.chip:nth-of-type(3){top:62%;left:8%;animation-delay:-4s}
+@keyframes float{50%{transform:translateY(-8px)}}
+.hero-pick{position:absolute;left:16px;right:16px;bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px 10px 20px;border-radius:999px;background:rgba(255,255,255,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.hero-pick span{font-size:14px;font-weight:500}
+.hero-pick b{font-weight:600}
+
+/* SUITCASE */
+.case{display:block;overflow:visible}
+.case-b{fill:var(--c);transition:fill .45s}
+
+/* SWATCHES / SIZES */
+.sw{display:flex;gap:8px;flex-wrap:wrap}
+.sw button{width:30px;height:30px;border-radius:50%;background:var(--sw);box-shadow:inset 0 0 0 1px rgba(19,19,19,.16);outline:2px solid transparent;outline-offset:3px;transition:outline-color .2s,transform .2s}
+.sw button:hover{transform:scale(1.08)}
+.sw button[aria-pressed=true]{outline-color:var(--ink)}
+.szs{display:flex;gap:6px}
+.szs button{min-width:46px;height:38px;padding:0 12px;border-radius:999px;border:1px solid var(--line);font-size:14px;font-weight:600;transition:all .2s}
+.szs button:hover:not(:disabled){border-color:var(--ink)}
+.szs button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.szs button:disabled{opacity:.3;cursor:not-allowed;text-decoration:line-through}
+
+/* MARQUEE */
+.mq{margin-top:clamp(40px,6vw,80px);border-block:1px solid var(--line);overflow:hidden;padding:18px 0}
+.mq-t{display:flex;width:max-content;animation:mq 36s linear infinite}
+.mq-t span{display:flex;align-items:center;gap:28px;padding-right:28px;font-size:clamp(18px,2.2vw,28px);font-weight:500;letter-spacing:-.02em;white-space:nowrap}
+.mq-t span::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--acc)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* CATALOG */
+.pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pcard{--c:#b9c1c9;background:var(--card);border-radius:var(--r);padding:8px;display:flex;flex-direction:column}
+.pvis{position:relative;height:clamp(280px,32vw,420px);border-radius:22px;background:color-mix(in srgb,var(--c) 26%,var(--panel));transition:background .5s;padding:36px 24px 28px}
+.cases{height:100%;display:flex;align-items:flex-end;justify-content:center;gap:3%}
+.cases .case{height:calc(var(--s,1)*100%);width:auto;transition:height .5s var(--ease)}
+.badges{position:absolute;top:14px;left:14px;display:flex;gap:6px}
+.badge{padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;background:#fff}
+.badge.sale{background:var(--acc);color:#fff}
+.pkind{position:absolute;top:14px;right:14px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:500;background:rgba(255,255,255,.7)}
+.pbody{padding:22px 18px 16px;display:flex;flex-direction:column;gap:18px;flex:1}
+.ptop{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.ptop h3{font-size:clamp(24px,2.6vw,34px)}
+.pdesc{font-size:14px;color:var(--mute);margin-top:8px;min-height:2.9em}
+.pprice{text-align:right;flex-shrink:0}
+.pprice b{display:block;font-size:clamp(20px,2.1vw,26px);font-weight:600;letter-spacing:-.03em;line-height:1.1}
+.pprice s{font-size:13px;color:var(--mute)}
+.opts{display:flex;gap:28px;flex-wrap:wrap}
+.opt-l{font-size:13px;color:var(--mute);margin-bottom:10px}
+.opt-l b{color:var(--ink);font-weight:600}
+.pfoot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:auto;padding-top:18px;border-top:1px solid var(--line)}
+.psplit{font-size:13px;color:var(--mute)}
+.pbuy{height:48px;padding:0 24px;flex-shrink:0}
+.pbuy.in{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+
+/* PROMO */
+.promo{background:var(--acc);border-radius:36px;padding:clamp(28px,5vw,64px);display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;overflow:hidden}
+.promo h2{font-size:clamp(34px,5.6vw,76px);margin-bottom:16px}
+.promo p{font-size:clamp(15px,1.4vw,18px);max-width:440px;margin-bottom:28px;opacity:.8}
+.tag{width:clamp(150px,18vw,220px);aspect-ratio:.66;border-radius:26px;background:#8b5a3c;transform:rotate(9deg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:#f1d9bf;box-shadow:0 30px 60px rgba(19,19,19,.25),inset 0 0 0 5px rgba(0,0,0,.08);position:relative}
+.tag::before{content:'';position:absolute;top:16px;width:18px;height:18px;border-radius:50%;background:var(--acc);box-shadow:inset 0 2px 3px rgba(0,0,0,.3)}
+.tag b{font-size:clamp(36px,4.4vw,56px);font-weight:600;letter-spacing:-.02em;text-shadow:0 1px 0 rgba(0,0,0,.35)}
+.tag small{font-size:10px;letter-spacing:.2em;opacity:.7}
+
+/* BENTO */
+.bento{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.b{background:var(--card);border-radius:var(--r);padding:clamp(22px,2.6vw,36px);display:flex;flex-direction:column;justify-content:space-between;gap:36px;min-height:260px}
+.b-q{grid-column:span 6;background:var(--ink);color:#fff}
+.b-q blockquote{font-size:clamp(24px,2.9vw,40px);font-weight:500;letter-spacing:-.035em;line-height:1.12}
+.b-q cite{font-style:normal;font-size:14px;color:rgba(255,255,255,.55)}
+.b-f{grid-column:span 3}
+.b-m{grid-column:span 6;gap:0;justify-content:flex-start}
+.ico{width:52px;height:52px;border-radius:16px;background:var(--bg);display:flex;align-items:center;justify-content:center}
+.ico svg{width:24px;height:24px}
+.b h4{font-size:19px;font-weight:600;letter-spacing:-.02em;margin-bottom:8px}
+.b p{font-size:14px;color:var(--mute)}
+.mat{display:grid;grid-template-columns:48px 1fr;gap:4px 12px;padding:18px 0;border-bottom:1px solid var(--line)}
+.mat:first-of-type{padding-top:0}.mat:last-child{border:none;padding-bottom:0}
+.mat i{font-style:normal;font-size:13px;font-weight:600;color:var(--acc);padding-top:4px}
+.mat h4{margin:0}
+.mat p{grid-column:2}
+
+/* DELIVERY */
+.dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.dcard{background:var(--card);border-radius:var(--r);padding:clamp(22px,2.6vw,32px);display:flex;flex-direction:column;gap:14px;min-height:280px}
+.dcard h3{font-size:24px;margin-top:auto}
+.dcard p{font-size:14px;color:var(--mute)}
+.dprice{font-size:15px;font-weight:600;padding-top:14px;border-top:1px solid var(--line)}
+.dgrid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.box{background:var(--panel);border-radius:var(--r);padding:clamp(22px,2.6vw,32px)}
+.box h4{font-size:19px;font-weight:600;letter-spacing:-.02em;margin-bottom:16px}
+.box p{font-size:14px;color:var(--mute)}
+.box p+p{margin-top:12px}
+.pms{display:flex;flex-wrap:wrap;gap:8px}
+.pm{padding:10px 18px;border-radius:999px;background:var(--card);font-size:14px;font-weight:500}
+
+/* FAQ */
+.faq-g{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(24px,5vw,80px);align-items:start}
+.faq-l{position:sticky;top:104px}
+.faq-l p{color:var(--mute);margin:20px 0 28px;max-width:340px}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-item:first-child{border-top:1px solid var(--line)}
+.faq-q{width:100%;text-align:left;padding:24px 0;font-size:clamp(17px,1.6vw,21px);font-weight:500;letter-spacing:-.02em;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.faq-ic{width:36px;height:36px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .35s var(--ease),background .2s,color .2s}
+.faq-ic svg{width:14px;height:14px}
+.faq-item.op .faq-ic{transform:rotate(45deg);background:var(--ink);color:#fff}
+.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease)}
+.faq-item.op .faq-a{grid-template-rows:1fr}
+.faq-a>div{overflow:hidden}
+.faq-a p{padding:0 56px 26px 0;font-size:15px;color:var(--mute);line-height:1.65}
+
+/* CONTACTS + FOOTER */
+.foot{background:var(--ink);color:#fff;border-radius:36px 36px 0 0;padding:clamp(48px,7vw,96px) 0 32px}
+.foot .eyebrow{color:rgba(255,255,255,.55)}
+.phone{display:block;font-size:clamp(38px,8.4vw,128px);font-weight:600;letter-spacing:-.055em;line-height:.95;transition:color .2s}
+.phone:hover{color:var(--acc)}
+.foot-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:32px}
+.btn-ghost{border:1px solid rgba(255,255,255,.22);color:#fff}
+.btn-ghost:hover{border-color:#fff}
+.fcols{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:32px;margin-top:clamp(48px,7vw,96px);padding-top:40px;border-top:1px solid rgba(255,255,255,.12)}
+.fcols h5{font-size:13px;font-weight:500;color:rgba(255,255,255,.5);margin-bottom:16px}
+.fcols ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.fcols a{font-size:15px;transition:color .2s}
+.fcols a:hover{color:var(--acc2)}
+.fbrand p{font-size:14px;color:rgba(255,255,255,.55);margin-top:14px;max-width:280px}
+.fbot{display:flex;justify-content:space-between;gap:16px 32px;flex-wrap:wrap;margin-top:48px;font-size:13px;color:rgba(255,255,255,.45)}
+.fbot a{text-decoration:underline;text-underline-offset:3px}
+.fbot a:hover{color:#fff}
+
+/* CART */
+.overlay{position:fixed;inset:0;background:rgba(19,19,19,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:1000;opacity:0;pointer-events:none;transition:opacity .35s}
+.overlay.on{opacity:1;pointer-events:all}
+.cart{position:fixed;top:10px;right:10px;bottom:10px;width:440px;max-width:calc(100vw - 20px);background:var(--bg);border-radius:var(--r);z-index:1001;transform:translateX(calc(100% + 20px));transition:transform .45s var(--ease);display:flex;flex-direction:column;overflow:hidden}
+.cart.on{transform:none}
+.cart-hd{padding:22px 22px 18px 26px;display:flex;justify-content:space-between;align-items:center}
+.cart-hd h3{font-size:24px}
+.cart-hd h3 span{color:var(--mute)}
+.cart-x{width:40px;height:40px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s}
+.cart-x:hover{background:var(--ink);color:#fff}
+.cart-body{flex:1;overflow-y:auto;padding:0 14px;display:flex;flex-direction:column;gap:8px}
+.empty{margin:auto;padding:24px;text-align:center;color:var(--mute);font-size:15px}
+.empty .case{height:110px;margin:0 auto 20px;--c:#d9d6cf;opacity:.8}
+.ci{display:flex;gap:14px;padding:10px;background:var(--card);border-radius:20px}
+.ci-img{width:84px;height:96px;border-radius:14px;background:color-mix(in srgb,var(--c) 26%,var(--panel));display:flex;align-items:flex-end;justify-content:center;padding:10px 0 8px;flex-shrink:0}
+.ci-img .case{height:100%;width:auto}
+.ci-main{flex:1;display:flex;flex-direction:column;min-width:0;padding:4px 4px 2px 0}
+.ci-nm{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.ci-sz{font-size:13px;color:var(--mute)}
+.ci-row{display:flex;justify-content:space-between;align-items:center;margin-top:auto}
+.qty{display:flex;align-items:center;gap:2px;background:var(--bg);border-radius:999px;padding:2px}
+.qty button{width:28px;height:28px;border-radius:50%;font-size:16px;line-height:1;transition:background .2s}
+.qty button:hover{background:var(--card)}
+.qty span{min-width:20px;text-align:center;font-size:14px;font-weight:600}
+.ci-pr{font-size:15px;font-weight:600}
+.cart-ft{padding:18px 22px 22px;display:flex;flex-direction:column;gap:14px}
+.promo-i{width:100%;height:46px;padding:0 18px;background:var(--card);border:1px solid transparent;border-radius:999px;font:inherit;font-size:14px;color:var(--ink);outline:none;transition:border-color .2s}
+.promo-i::placeholder{color:var(--mute)}
+.promo-i:focus{border-color:var(--ink)}
+.cart-tot{display:flex;justify-content:space-between;align-items:baseline}
+.cart-tot span:first-child{font-size:15px;color:var(--mute)}
+.cart-tot-p{font-size:30px;font-weight:600;letter-spacing:-.04em}
+.split-note{font-size:13px;color:var(--mute)}
+.chk{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--mute);cursor:pointer}
+.chk+.chk{margin-top:8px}
+.chk input{accent-color:var(--ink);width:16px;height:16px;margin-top:2px;flex-shrink:0}
+.chk a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.chk-err{font-size:13px;color:#d2341b;display:none}
+.chk-err.on{display:block}
+.btn-chk{width:100%}
+
+/* COOKIE */
+.cookie{position:fixed;bottom:16px;left:16px;z-index:2000;background:var(--card);border-radius:22px;padding:18px 18px 18px 22px;display:flex;align-items:center;gap:16px;max-width:420px;width:calc(100% - 32px);font-size:13px;color:var(--mute);box-shadow:0 12px 48px rgba(19,19,19,.14);transform:translateY(160px);transition:transform .5s var(--ease)}
+.cookie.show{transform:none}
+.cookie p{flex:1}
+.cookie p a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.cookie .btn{height:42px;padding:0 20px;font-size:14px}
+
+/* REVEAL */
+.fi{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.fi.vis{opacity:1;transform:none}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+  .hero-g{grid-template-columns:1fr}
+  .hero-l{gap:36px}
+  .b-q,.b-m{grid-column:span 12}.b-f{grid-column:span 6}
+  .faq-g{grid-template-columns:1fr}.faq-l{position:static}
+  .fcols{grid-template-columns:1fr 1fr}
+}
+@media(max-width:820px){
+  .nav-links{display:none}.burger{display:flex}.nav-r{margin-left:auto}
+  .nav-in{padding-left:20px}
+  .pgrid,.dgrid,.dgrid2{grid-template-columns:minmax(0,1fr)}
+  .dcard{min-height:0}.dcard h3{margin-top:8px}
+  .promo{grid-template-columns:1fr}
+  .tag{display:none}
+}
+@media(max-width:520px){
+  .hero{padding-top:92px}
+  .cart-btn b{display:none}.cart-btn{padding-left:8px}
+  .b-f{grid-column:span 12}.b{min-height:0}
+  .chip:nth-of-type(2){top:30%}
+  .hero-pick span{display:none}.hero-pick{justify-content:center}
+  .pfoot{flex-direction:column;align-items:stretch}.pbuy{width:100%}
+  .fcols{grid-template-columns:1fr}
+  .faq-a p{padding-right:0}
+  .stat+.stat{padding-left:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .fi{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- SHARED SVG DEFS -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="bbShade" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity=".3"/>
+      <stop offset=".35" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".22"/>
+    </linearGradient>
+    <symbol id="i-laptop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="2"/><path d="M2 19h20"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 5 13.5h6L10 22l9-12h-6.5L13 2Z"/></symbol>
+    <symbol id="i-cup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h12v6a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5V8Z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17M8 2v3M12 2v3"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5a7 7 0 0 0-14 0C5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h11v10H2zM13 10h4.5L21 13.5V16h-8"/><circle cx="6.5" cy="17.5" r="2"/><circle cx="17" cy="17.5" r="2"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6M8 6h10v10"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></symbol>
+  </defs>
+</svg>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a href="#" class="logo">BLESS<span>BAGGAGE</span></a>
+    <ul class="nav-links">
+      <li><a href="#catalog">Каталог</a></li>
+      <li><a href="#about">О нас</a></li>
+      <li><a href="#delivery">Клиентам</a></li>
+      <li><a href="#contacts">Контакты</a></li>
+    </ul>
+    <div class="nav-r">
+      <button class="cart-btn" id="cartBtn" aria-label="Открыть корзину"><b>Корзина</b> <span class="cart-c" id="cCount">0</span></button>
+      <button class="burger" id="burger" aria-label="Меню"><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob" id="mob">
+  <button class="mob-x" id="mobX" aria-label="Закрыть меню"><svg><use href="#i-x"/></svg></button>
+  <a href="#catalog">Каталог</a>
+  <a href="#about">О нас</a>
+  <a href="#delivery">Клиентам</a>
+  <a href="#contacts">Контакты</a>
+</div>
+
+<!-- HERO -->
+<header class="hero wrap">
+  <div class="hero-g">
+    <div class="hero-l">
+      <div>
+        <div class="eyebrow">Премиальные чемоданы · Москва</div>
+        <h1 class="hero-h">Чемодан, который <em>задаёт</em> стандарт</h1>
+        <p class="hero-sub">Кожа, алюминий и трёхслойный поликарбонат. Ноутбук, зарядка, подстаканник — всё внутри. Для тех, кто ценит детали.</p>
+        <div class="btns">
+          <a href="#catalog" class="btn btn-ink">Смотреть каталог</a>
+          <a href="#about" class="btn btn-line">О нас</a>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="stat-n">20+</div><div class="stat-l">моделей</div></div>
+        <div class="stat"><div class="stat-n">3</div><div class="stat-l">материала</div></div>
+        <div class="stat"><div class="stat-n">7</div><div class="stat-l">дней на возврат</div></div>
+      </div>
+    </div>
+    <div class="hero-v" id="heroV">
+      <div class="chip"><svg><use href="#i-bolt"/></svg>USB-зарядка</div>
+      <div class="chip"><svg><use href="#i-laptop"/></svg>Отсек для ноутбука</div>
+      <div class="chip"><svg><use href="#i-cup"/></svg>Подстаканник</div>
+      <div id="heroCase" style="height:100%"></div>
+      <div class="hero-pick">
+        <span>Moscow · <b id="heroName">Silver</b></span>
+        <div class="sw" id="heroSw"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="mq" aria-hidden="true">
+  <div class="mq-t" id="mq"></div>
+</div>
+
+<!-- CATALOG -->
+<section class="sec wrap" id="catalog">
+  <div class="sec-hdr">
+    <div><div class="eyebrow">Каталог</div><h2 class="h2">Соберите свой</h2></div>
+    <a href="https://blessbaggage.ru/catalog" target="_blank" rel="noopener" class="lnk">Все модели →</a>
+  </div>
+  <div class="pgrid" id="pgrid"></div>
+</section>
+
+<!-- PROMO -->
+<div class="wrap">
+  <div class="promo fi">
+    <div>
+      <h2>Персонализация в подарок</h2>
+      <p>При покупке любого чемодана — гравировка или монограмма бесплатно</p>
+      <a href="https://wa.me/79299900026" target="_blank" rel="noopener" class="btn btn-white">Узнать подробнее <svg><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="tag" aria-hidden="true"><b>A·M</b><small>BLESSBAGGAGE</small></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="sec wrap" id="about">
+  <div class="sec-hdr">
+    <div><div class="eyebrow">О нас</div><h2 class="h2">Всё уже внутри</h2></div>
+  </div>
+  <div class="bento">
+    <div class="b b-q fi">
+      <blockquote>«Мы те самые ребята, которые устали от ужасных, старомодных чемоданов — и решили сделать свои»</blockquote>
+      <cite>Команда BLESSBAGGAGE</cite>
+    </div>
+    <div class="b b-f fi"><div class="ico"><svg><use href="#i-laptop"/></svg></div><div><h4>Отделение для ноутбука</h4><p>Встроенный органайзер для техники — планшет, ноутбук и кабели всегда под рукой</p></div></div>
+    <div class="b b-f fi"><div class="ico"><svg><use href="#i-bolt"/></svg></div><div><h4>Встроенная зарядка</h4><p>USB-порт позволяет заряжать телефон прямо из чемодана — без розеток в очереди</p></div></div>
+    <div class="b b-f fi"><div class="ico"><svg><use href="#i-cup"/></svg></div><div><h4>Подстаканник</h4><p>Потому что кофе в аэропорту — это святое. Встроен в конструкцию ручки</p></div></div>
+    <div class="b b-f fi"><div class="ico"><svg><use href="#i-lock"/></svg></div><div><h4>Замки-защёлки</h4><p>Быстрое открытие и надёжная защита от несанкционированного доступа</p></div></div>
+    <div class="b b-m fi">
+      <div class="mat"><i>01</i><h4>Поликарбонат</h4><p>Трёхслойный композитный — лёгкий, прочный, устойчивый к ударам и царапинам</p></div>
+      <div class="mat"><i>02</i><h4>Алюминий</h4><p>Элементы конструкции из алюминия — жёсткость каркаса и стильный внешний вид</p></div>
+      <div class="mat"><i>03</i><h4>Кожа</h4><p>Натуральная кожа в отделке — детали, которые выдают класс вещи с первого взгляда</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERY -->
+<section class="sec wrap" id="delivery" style="padding-top:0"><!-- отступ сверху даёт предыдущая секция -->
+  <div class="sec-hdr">
+    <div><div class="eyebrow">Клиентам</div><h2 class="h2">Доставка и оплата</h2></div>
+  </div>
+  <div class="dgrid">
+    <div class="dcard fi"><div class="ico"><svg><use href="#i-pin"/></svg></div><h3>Москва</h3><p>Курьером в день заказа. Доставим в удобное время — согласуем в WhatsApp</p><div class="dprice">700 ₽</div></div>
+    <div class="dcard fi"><div class="ico"><svg><use href="#i-truck"/></svg></div><h3>Россия</h3><p>Доставка СДЭК по всей стране. Отправка в течение 36 часов после оплаты</p><div class="dprice">По тарифам СДЭК</div></div>
+    <div class="dcard fi"><div class="ico"><svg><use href="#i-globe"/></svg></div><h3>ЕАЭС и другие страны</h3><p>Армения, Беларусь, Казахстан, Кыргызстан — через СДЭК. Другие страны — индивидуально</p><div class="dprice">По тарифам СДЭК</div></div>
+  </div>
+  <div class="dgrid2">
+    <div class="box fi">
+      <h4>Способы оплаты</h4>
+      <div class="pms">
+        <span class="pm">Банковская карта</span>
+        <span class="pm">Наличными (Москва)</span>
+        <span class="pm">Яндекс Сплит</span>
+        <span class="pm">Подели</span>
+        <span class="pm">Альфа Pay</span>
+      </div>
+    </div>
+    <div class="box fi">
+      <h4>Возврат</h4>
+      <p>До получения — откажитесь в сроки доставки через WhatsApp. После получения — 7 дней на возврат. Товар должен сохранить товарный вид, ярлыки и документы. Возврат через СДЭК — расходы на пересылку несёт покупатель.</p>
+      <p>Не принимаем к возврату товары б/у и изготовленные по индивидуальному заказу.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec wrap" id="faq" style="padding-top:0">
+  <div class="faq-g">
+    <div class="faq-l">
+      <div class="eyebrow">Часто спрашивают</div>
+      <h2 class="h2">Ответы на вопросы</h2>
+      <p>Не нашли ответ? Напишите — менеджер поможет с выбором.</p>
+      <a href="https://wa.me/79299900026" target="_blank" rel="noopener" class="btn btn-ink">Написать в WhatsApp</a>
+    </div>
+    <div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Из чего сделаны чемоданы BLESSBAGGAGE?</span><span class="faq-ic"><svg><use href="#i-plus"/></svg></span></button>
+        <div class="faq-a"><div><p>Корпус — трёхслойный композитный поликарбонат. Элементы конструкции — алюминий. Отделка — натуральная кожа. Сочетание обеспечивает прочность, лёгкость и стильный внешний вид.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Есть ли USB-зарядка и подстаканник?</span><span class="faq-ic"><svg><use href="#i-plus"/></svg></span></button>
+        <div class="faq-a"><div><p>Да, во многих моделях есть встроенный USB-порт для зарядки устройств, подстаканник, отделение для ноутбука и подставка для телефона.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Как оформить заказ?</span><span class="faq-ic"><svg><use href="#i-plus"/></svg></span></button>
+        <div class="faq-a"><div><p>Добавьте чемодан в корзину прямо на этой странице и нажмите «Оформить заказ» — откроется WhatsApp с деталями. Или напишите нам в WhatsApp напрямую, и менеджер поможет с выбором.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Можно ли купить в рассрочку?</span><span class="faq-ic"><svg><use href="#i-plus"/></svg></span></button>
+        <div class="faq-a"><div><p>Да! Принимаем оплату через «Яндекс Сплит» и «Подели» — разбейте покупку на 4 части без переплат и процентов.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Сколько стоит доставка по Москве?</span><span class="faq-ic"><svg><use href="#i-plus"/></svg></span></button>
+        <div class="faq-a"><div><p>Доставка по Москве курьером — фиксированные 700 ₽. Возможна доставка в день заказа. В Москве также доступна оплата наличными курьеру.</p></div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Что такое персонализация?</span><span class="faq-ic"><svg><use href="#i-plus"/></svg></span></button>
+        <div class="faq-a"><div><p>При покупке любого чемодана делаем персонализацию в подарок — гравировку имени, монограммы или символа. Уточняйте детали у менеджера в WhatsApp.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS + FOOTER -->
+<footer class="foot" id="contacts">
+  <div class="wrap">
+    <div class="eyebrow">Контакты</div>
+    <a href="tel:+79299900026" class="phone">+7 (929) 990-00-26</a>
+    <div class="foot-cta">
+      <a href="https://wa.me/79299900026" target="_blank" rel="noopener" class="btn btn-white">Написать в WhatsApp <svg><use href="#i-arrow"/></svg></a>
+      <a href="mailto:info@blessbaggage.ru" class="btn btn-ghost">info@blessbaggage.ru</a>
+      <a href="https://instagram.com/blessbaggage" target="_blank" rel="noopener" class="btn btn-ghost">@blessbaggage</a>
+    </div>
+    <div class="fcols">
+      <div class="fbrand">
+        <div class="logo">BLESS<span>BAGGAGE</span></div>
+        <p>Премиальные чемоданы для тех, кто устал от старомодных решений. Сделано с любовью к деталям.</p>
+      </div>
+      <div><h5>Каталог</h5><ul><li><a href="#catalog">Чемоданы Moscow</a></li><li><a href="#catalog">Чемоданы Madrid</a></li><li><a href="#catalog">Комплекты</a></li><li><a href="#">Чехлы</a></li><li><a href="#">Аксессуары</a></li></ul></div>
+      <div><h5>Клиентам</h5><ul><li><a href="#delivery">Доставка и оплата</a></li><li><a href="#faq">FAQ</a></li><li><a href="#">Договор оферты</a></li><li><a href="#">Политика данных</a></li></ul></div>
+      <div><h5>Связь</h5><ul><li><a href="mailto:info@blessbaggage.ru">Заказы: info@blessbaggage.ru</a></li><li><a href="mailto:friends@blessbaggage.ru">Сотрудничество: friends@blessbaggage.ru</a></li><li><a href="https://instagram.com/blessbaggage" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://wa.me/79299900026" target="_blank" rel="noopener">WhatsApp</a></li></ul></div>
+    </div>
+    <div class="fbot">
+      <div>© 2024 BLESSBAGGAGE · ИП Мироненко Александр Сергеевич · ИНН 312345062415</div>
+      <div><a href="#">Договор оферты</a> · <a href="#">Политика обработки персональных данных</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- CART -->
+<div class="overlay" id="overlay"></div>
+<aside class="cart" id="cartSide" aria-label="Корзина">
+  <div class="cart-hd"><h3>Корзина <span id="cHdCount">0</span></h3><button class="cart-x" id="cartX" aria-label="Закрыть корзину"><svg><use href="#i-x"/></svg></button></div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-ft" id="cartFt" style="display:none">
+    <input class="promo-i" id="promoIn" placeholder="Промокод — менеджер применит при оформлении">
+    <div class="cart-tot"><span>Итого</span><span class="cart-tot-p" id="cTotal">0 ₽</span></div>
+    <div class="split-note">Можно оплатить частями через Яндекс Сплит и Подели</div>
+    <div>
+      <label class="chk"><input type="checkbox" id="ck1"> <span>Согласен(на) на <a href="#">обработку персональных данных</a></span></label>
+      <label class="chk"><input type="checkbox" id="ck2"> <span>Ознакомлен(а) с <a href="#">публичной офертой</a></span></label>
+    </div>
+    <div class="chk-err" id="chkErr">Отметьте согласие с условиями</div>
+    <button class="btn btn-ink btn-chk" id="chkBtn">Оформить в WhatsApp</button>
+  </div>
+</aside>
+
+<!-- COOKIE -->
+<div class="cookie" id="cookie">
+  <p>Используем cookies для улучшения работы сайта. <a href="#">Подробнее</a></p>
+  <button class="btn btn-ink" id="cookieOk">Принять</button>
+</div>
+
+<script>
+const COLORS={
+  'SILVER':{hex:'#b9c1c9',name:'Silver'},
+  'WHITE':{hex:'#f4f1ea',name:'White'},
+  'DARK BLUE':{hex:'#16264a',name:'Dark Blue'},
+  'SPACE GREY':{hex:'#5f686f',name:'Space Grey'},
+  'BLACK':{hex:'#1d1d1f',name:'Black'},
+  'PINK':{hex:'#e59aa6',name:'Pink'},
+  'YELLOW':{hex:'#f0c53c',name:'Yellow'}
+};
+// g — карточка-конфигуратор, c — цвет из COLORS
+const PRODUCTS=[
+  {id:1,n:'MOSCOW SILVER',sz:'S',d:'Ручная кладь, которая задаёт новый стандарт',p:26900,op:null,g:'moscow',c:'SILVER'},
+  {id:2,n:'MOSCOW WHITE',sz:'S',d:'Ручная кладь, которая задаёт новый стандарт',p:26900,op:null,g:'moscow',c:'WHITE'},
+  {id:3,n:'MOSCOW DARK BLUE',sz:'S',d:'Ручная кладь, которая задаёт новый стандарт',p:24900,op:26900,g:'moscow',c:'DARK BLUE',pre:true},
+  {id:4,n:'MOSCOW SPACE GREY',sz:'S',d:'Ручная кладь, которая задаёт новый стандарт',p:26900,op:null,g:'moscow',c:'SPACE GREY'},
+  {id:5,n:'MOSCOW BLACK',sz:'S',d:'Ручная кладь, которая задаёт новый стандарт',p:26900,op:null,g:'moscow',c:'BLACK'},
+  {id:6,n:'MOSCOW SPACE GREY',sz:'M',d:'Золотая середина путешествий — универсальный размер',p:27900,op:null,g:'moscow',c:'SPACE GREY'},
+  {id:7,n:'MOSCOW BLACK',sz:'M',d:'Золотая середина путешествий — универсальный размер',p:27900,op:null,g:'moscow',c:'BLACK'},
+  {id:8,n:'MOSCOW SILVER',sz:'M',d:'Золотая середина путешествий — универсальный размер',p:27900,op:null,g:'moscow',c:'SILVER'},
+  {id:9,n:'MOSCOW WHITE',sz:'L',d:'Больше пространства — больше свободы',p:29900,op:null,g:'moscow',c:'WHITE'},
+  {id:10,n:'MOSCOW DARK BLUE',sz:'L',d:'Больше пространства — больше свободы',p:29900,op:null,g:'moscow',c:'DARK BLUE'},
+  {id:11,n:'MOSCOW SILVER',sz:'L',d:'Больше пространства — больше свободы',p:29900,op:null,g:'moscow',c:'SILVER'},
+  {id:12,n:'MOSCOW SPACE GREY',sz:'L',d:'Больше пространства — больше свободы',p:29900,op:null,g:'moscow',c:'SPACE GREY'},
+  {id:13,n:'MADRID PINK',sz:'M',d:'Золотая середина путешествий — универсальный размер',p:26900,op:null,g:'madrid',c:'PINK'},
+  {id:14,n:'MADRID PINK',sz:'S',d:'Яркая ручная кладь нового поколения',p:24900,op:null,g:'madrid',c:'PINK'},
+  {id:15,n:'MADRID YELLOW',sz:'S',d:'Яркая ручная кладь нового поколения',p:24900,op:null,g:'madrid',c:'YELLOW'},
+  {id:16,n:'MADRID WHITE',sz:'S',d:'Яркая ручная кладь нового поколения',p:24900,op:null,g:'madrid',c:'WHITE'},
+  {id:17,n:'SET MOSCOW S&L WHITE',sz:'',d:'Идеальная пара для любых маршрутов',p:49900,op:56800,g:'set2',c:'WHITE'},
+  {id:18,n:'SET MOSCOW S&L SILVER',sz:'',d:'Идеальная пара для любых маршрутов',p:49900,op:56800,g:'set2',c:'SILVER'},
+  {id:19,n:'SET MOSCOW S&M&L BLUE',sz:'',d:'Абсолютный контроль над любым маршрутом',p:74900,op:84700,g:'set3',c:'DARK BLUE'},
+  {id:20,n:'SET MOSCOW S&M&L BLACK',sz:'',d:'Абсолютный контроль над любым маршрутом',p:74900,op:84700,g:'set3',c:'BLACK'}
+];
+const SCALE={S:.74,M:.87,L:1};
+const GROUPS=[
+  {key:'moscow',title:'Moscow',kind:'Чемодан'},
+  {key:'madrid',title:'Madrid',kind:'Чемодан'},
+  {key:'set2',title:'Moscow S + L',kind:'Комплект',set:['S','L']},
+  {key:'set3',title:'Moscow S + M + L',kind:'Комплект',set:['S','M','L']}
+].map(g=>({...g,items:PRODUCTS.filter(p=>p.g===g.key)}));
+
+const $=id=>document.getElementById(id);
+function fmt(n){return n.toLocaleString('ru-RU')+' ₽'}
+
+function caseSvg(){
+  const gr=[54,72.4,90.8,109.2,127.6,146].map(x=>`<path d="M${x} 80V258" stroke="rgba(0,0,0,.15)" stroke-width="3.5" stroke-linecap="round"/><path d="M${x+2.3} 80V258" stroke="rgba(255,255,255,.22)" stroke-width="1.2" stroke-linecap="round"/>`).join('');
+  const wheel=x=>`<rect x="${x-8}" y="282" width="16" height="10" rx="3" fill="#2a2a2c"/><circle cx="${x}" cy="296" r="8" fill="#151516"/><circle cx="${x}" cy="296" r="3" fill="#5a5d61"/>`;
+  return `<svg class="case" viewBox="0 0 200 316" aria-hidden="true"><ellipse cx="100" cy="306" rx="74" ry="7" fill="rgba(0,0,0,.13)"/><rect x="71" y="12" width="5" height="46" rx="2" fill="#8d9197"/><rect x="124" y="12" width="5" height="46" rx="2" fill="#8d9197"/><rect x="64" y="4" width="72" height="13" rx="6.5" fill="#1b1b1d"/>${wheel(52)}${wheel(148)}<rect class="case-b" x="30" y="52" width="140" height="234" rx="24"/><rect x="30" y="52" width="140" height="234" rx="24" fill="url(#bbShade)"/>${gr}<rect x="30.5" y="52.5" width="139" height="233" rx="23.5" fill="none" stroke="rgba(0,0,0,.16)"/><rect x="76" y="45" width="48" height="11" rx="5.5" fill="#8b5a3c"/><rect x="165" y="112" width="9" height="24" rx="3" fill="#d5d8dc" stroke="rgba(0,0,0,.25)" stroke-width=".8"/><rect x="165" y="204" width="9" height="24" rx="3" fill="#d5d8dc" stroke="rgba(0,0,0,.25)" stroke-width=".8"/></svg>`;
+}
+function swatches(keys,active,attr){
+  return keys.map(k=>`<button style="--sw:${COLORS[k].hex}" ${attr}="${k}" aria-pressed="${k===active}" aria-label="${COLORS[k].name}" title="${COLORS[k].name}"></button>`).join('');
+}
+
+// HERO
+const heroKeys=['SILVER','WHITE','DARK BLUE','SPACE GREY','BLACK'];
+function setHero(k){
+  $('heroV').style.setProperty('--c',COLORS[k].hex);
+  $('heroName').textContent=COLORS[k].name;
+  $('heroSw').innerHTML=swatches(heroKeys,k,'data-h');
+}
+$('heroCase').innerHTML=caseSvg();
+$('heroSw').addEventListener('click',e=>{const b=e.target.closest('[data-h]');if(b)setHero(b.dataset.h)});
+setHero('SILVER');
+
+// MARQUEE
+$('mq').innerHTML=['Персонализация в подарок','Доставка по Москве в день заказа','Оплата частями без переплат','7 дней на возврат','СДЭК по России и ЕАЭС']
+  .map(t=>`<span>${t}</span>`).join('').repeat(4);
+
+// CART
+let cart=[];
+try{cart=(JSON.parse(localStorage.getItem('bb_cart'))||[]).filter(x=>PRODUCTS.some(p=>p.id===x.id)&&x.qty>0)}catch(e){}
+const prod=id=>PRODUCTS.find(p=>p.id===id);
+function saveCart(){try{localStorage.setItem('bb_cart',JSON.stringify(cart))}catch(e){}}
+function addToCart(id){
+  const ex=cart.find(x=>x.id===id);
+  if(ex)ex.qty++;else cart.push({id,qty:1});
+  renderCart();openCart();
+}
+function setQty(id,d){
+  const it=cart.find(x=>x.id===id);if(!it)return;
+  it.qty+=d;
+  if(it.qty<=0)cart=cart.filter(x=>x.id!==id);
+  renderCart();
+}
+function cartTotal(){return cart.reduce((s,x)=>s+prod(x.id).p*x.qty,0)}
+function renderCart(){
+  const cnt=cart.reduce((s,x)=>s+x.qty,0);
+  $('cCount').textContent=cnt;$('cHdCount').textContent=cnt;
+  if(!cart.length){
+    $('cartBody').innerHTML=`<div class="empty">${caseSvg()}Корзина пуста.<br>Добавьте чемодан, который покорит ваш путь.</div>`;
+    $('cartFt').style.display='none';
+  }else{
+    $('cartBody').innerHTML=cart.map(x=>{const p=prod(x.id);return `<div class="ci"><div class="ci-img" style="--c:${COLORS[p.c].hex}">${caseSvg()}</div><div class="ci-main"><div class="ci-nm">${p.n}</div><div class="ci-sz">${p.sz?'Размер '+p.sz:'Комплект'}</div><div class="ci-row"><div class="qty"><button data-q="-1" data-id="${p.id}" aria-label="Меньше">−</button><span>${x.qty}</span><button data-q="1" data-id="${p.id}" aria-label="Больше">+</button></div><div class="ci-pr">${fmt(p.p*x.qty)}</div></div></div></div>`}).join('');
+    $('cartFt').style.display='flex';
+    $('cTotal').textContent=fmt(cartTotal());
+  }
+  saveCart();
+  GROUPS.forEach(syncCard);
+}
+function openCart(){$('overlay').classList.add('on');$('cartSide').classList.add('on');document.body.style.overflow='hidden'}
+function closeCart(){$('overlay').classList.remove('on');$('cartSide').classList.remove('on');document.body.style.overflow=''}
+function checkout(){
+  const ok=$('ck1').checked&&$('ck2').checked;
+  $('chkErr').classList.toggle('on',!ok);
+  if(!ok)return;
+  const items=cart.map(x=>{const p=prod(x.id);return `${p.n}${p.sz?' '+p.sz:''} × ${x.qty} — ${fmt(p.p*x.qty)}`}).join('\n');
+  const promo=$('promoIn').value.trim();
+  const text='Хочу оформить заказ:\n'+items+'\n\nИтого: '+fmt(cartTotal())+(promo?'\nПромокод: '+promo:'');
+  window.open('https://wa.me/79299900026?text='+encodeURIComponent(text),'_blank');
+}
+$('cartBody').addEventListener('click',e=>{const b=e.target.closest('[data-q]');if(b)setQty(+b.dataset.id,+b.dataset.q)});
+$('chkBtn').addEventListener('click',checkout);
+$('cartBtn').addEventListener('click',openCart);
+$('cartX').addEventListener('click',closeCart);
+$('overlay').addEventListener('click',closeCart);
+
+// CATALOG
+const sel={};
+GROUPS.forEach(g=>sel[g.key]={c:g.items[0].c,sz:g.items[0].sz});
+function pick(g){const s=sel[g.key];return g.items.find(i=>i.c===s.c&&i.sz===s.sz)}
+function cardBody(g){
+  const s=sel[g.key],p=pick(g),inC=cart.some(x=>x.id===p.id);
+  const colors=[...new Set(g.items.map(i=>i.c))];
+  const sizes=['S','M','L'].filter(z=>g.items.some(i=>i.sz===z));
+  const szHtml=sizes.length?`<div><div class="opt-l">Размер</div><div class="szs">${sizes.map(z=>`<button data-sz="${z}" aria-pressed="${z===s.sz}" ${g.items.some(i=>i.c===s.c&&i.sz===z)?'':'disabled title="Нет в этом цвете"'}>${z}</button>`).join('')}</div></div>`:'';
+  return `<div class="ptop"><div><h3>${g.title}</h3><p class="pdesc">${p.d}</p></div><div class="pprice"><b>${fmt(p.p)}</b>${p.op?`<s>${fmt(p.op)}</s>`:''}</div></div>
+    <div class="opts"><div><div class="opt-l">Цвет — <b>${COLORS[s.c].name}</b></div><div class="sw">${swatches(colors,s.c,'data-c')}</div></div>${szHtml}</div>
+    <div class="pfoot"><span class="psplit">4 платежа по ${fmt(Math.round(p.p/4))} через Сплит</span><button class="btn btn-ink pbuy ${inC?'in':''}" data-buy="${p.id}">${inC?'В корзине · ещё +1':p.pre?'Предзаказ':'В корзину'}</button></div>`;
+}
+function syncCard(g){
+  const el=document.querySelector(`[data-g="${g.key}"]`);if(!el)return;
+  const s=sel[g.key],p=pick(g);
+  el.style.setProperty('--c',COLORS[s.c].hex);
+  if(!g.set)el.querySelector('.case').style.setProperty('--s',SCALE[s.sz]);
+  el.querySelector('.badges').innerHTML=(p.pre?'<span class="badge">Предзаказ</span>':'')+(p.op?`<span class="badge sale">−${Math.round((1-p.p/p.op)*100)}%</span>`:'');
+  el.querySelector('.pbody').innerHTML=cardBody(g);
+}
+$('pgrid').innerHTML=GROUPS.map(g=>`<article class="pcard fi" data-g="${g.key}">
+  <div class="pvis"><div class="badges"></div><span class="pkind">${g.kind}</span><div class="cases">${(g.set||[0]).map(z=>caseSvg().replace('class="case"',`class="case" style="--s:${SCALE[z]||1}"`)).join('')}</div></div>
+  <div class="pbody"></div></article>`).join('');
+$('pgrid').addEventListener('click',e=>{
+  const card=e.target.closest('[data-g]');if(!card)return;
+  const g=GROUPS.find(x=>x.key===card.dataset.g),s=sel[g.key];
+  const c=e.target.closest('[data-c]'),z=e.target.closest('[data-sz]'),b=e.target.closest('[data-buy]');
+  if(c){
+    s.c=c.dataset.c;
+    if(!pick(g))s.sz=g.items.find(i=>i.c===s.c).sz;
+    syncCard(g);
+  }else if(z&&!z.disabled){s.sz=z.dataset.sz;syncCard(g)}
+  else if(b)addToCart(+b.dataset.buy);
+});
+
+// NAV
+addEventListener('scroll',()=>$('nav').classList.toggle('on',scrollY>40),{passive:true});
+function closeMob(){$('mob').classList.remove('open')}
+$('burger').addEventListener('click',()=>$('mob').classList.add('open'));
+$('mobX').addEventListener('click',closeMob);
+$('mob').querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMob));
+addEventListener('keydown',e=>{if(e.key==='Escape'){closeCart();closeMob()}});
+
+// FAQ
+document.querySelectorAll('.faq-item').forEach(item=>{
+  const q=item.querySelector('.faq-q');
+  q.addEventListener('click',()=>{
+    const was=item.classList.contains('op');
+    document.querySelectorAll('.faq-item').forEach(x=>{x.classList.remove('op');x.querySelector('.faq-q').setAttribute('aria-expanded','false')});
+    if(!was){item.classList.add('op');q.setAttribute('aria-expanded','true')}
+  });
+});
+
+// COOKIE
+let ckSeen=false;
+try{ckSeen=!!localStorage.getItem('bb_ck')}catch(e){}
+$('cookieOk').addEventListener('click',()=>{$('cookie').classList.remove('show');try{localStorage.setItem('bb_ck','1')}catch(e){}});
+if(!ckSeen)setTimeout(()=>$('cookie').classList.add('show'),1800);
+
+// REVEAL
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');observer.unobserve(e.target)}});
+},{threshold:.08});
+document.querySelectorAll('.fi').forEach(el=>observer.observe(el));
+
+// INIT
+renderCart();
+</script>
+</body>
+</html>
