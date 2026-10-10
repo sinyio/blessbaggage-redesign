@@ -20,6 +20,7 @@ html{scroll-behavior:smooth;scroll-padding-top:96px}
 body{font-family:'Onest','Helvetica Neue',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
+a,button,label,input{-webkit-tap-highlight-color:transparent}
 :focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:6px}
 .wrap{max-width:1320px;margin:0 auto;padding:0 var(--gut)}
 h1,h2,h3{font-weight:600;letter-spacing:-.04em;line-height:1;text-wrap:balance}
@@ -190,7 +191,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.04em;line-height:1;text-wrap:balance}
 .faq-l p{color:var(--mute);margin:20px 0 28px;max-width:340px}
 .faq-item{border-bottom:1px solid var(--line)}
 .faq-item:first-child{border-top:1px solid var(--line)}
-.faq-q{width:100%;text-align:left;padding:24px 0;font-size:clamp(17px,1.6vw,21px);font-weight:500;letter-spacing:-.02em;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.faq-q{-webkit-user-select:none;user-select:none;width:100%;text-align:left;padding:24px 0;font-size:clamp(17px,1.6vw,21px);font-weight:500;letter-spacing:-.02em;display:flex;justify-content:space-between;align-items:center;gap:20px}
 .faq-ic{width:36px;height:36px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .35s var(--ease),background .2s,color .2s}
 .faq-ic svg{width:14px;height:14px}
 .faq-item.op .faq-ic{transform:rotate(45deg);background:var(--ink);color:#fff}
